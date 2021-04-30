@@ -5,10 +5,8 @@ services:
     image: postgres:12-alpine
     volumes:
       - postgres_data_app:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=myproject
+    env_file:
+      ./.env
 
   backend:
     build:
@@ -22,6 +20,8 @@ services:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+        ./.env
 
   frontend:
     build:
@@ -34,6 +34,8 @@ services:
     command: /bin/sh -c "yarn && quasar dev"
     depends_on:
       - backend
+    env_file:
+      ./.env
 
 volumes:
   postgres_data_app:
