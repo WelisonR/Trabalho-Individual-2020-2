@@ -23,5 +23,17 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    volumes:
+      - './client:/client'
+    command: /bin/sh -c "yarn && quasar dev"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data_app:
