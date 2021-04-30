@@ -10,5 +10,18 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=myproject
 
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: ["sh", "docker-entrypoint.sh"]
+    restart: "always"
+    volumes:
+      - ./api/:/api/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
 volumes:
   postgres_data_app:
