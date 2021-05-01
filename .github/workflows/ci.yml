@@ -1,0 +1,41 @@
+name: Back-end CI
+
+on: push
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:12
+        env:
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: myproject
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build backend image
+      run: docker build -t backend ./api
+
+    - name: Run backend tests
+      run: |
+        docker run\
+          --network="host"\
+          --env POSTGRES_HOST="localhost"\
+          --env POSTGRES_PORT="5432"\
+          --env POSTGRES_DB="myproject"\
+          --env POSTGRES_USER="myuser"\
+          --env POSTGRES_PASSWORD="password"\
+          --env DJANGO_KEY="django-insecure-sca_4i79@8^p7b4i3ggm!vz_&t7!+-omwh&8_q=lxbu%elp-o#"\
+          backend sh -c\
+          "python manage.py makemigrations && python manage.py migrate && python manage.py test"
