@@ -1,13 +1,13 @@
-FROM node:13.14-alpine
+FROM node:13.14
 
 # define work directory
 WORKDIR /client
 
-# copy package dependencies files
-COPY package*.json ./
+# copy project files
+COPY . .
 
 # install CLI of quasar framework
 RUN yarn global add @quasar/cli
 
-# copy project files
-COPY . .
+# install project dependencies
+RUN yarn

@@ -11,6 +11,7 @@
     "test:unit": "jest --updateSnapshot",
     "test:unit:ci": "jest --ci",
     "test:unit:coverage": "jest --coverage",
+    "test:ci:unit:coverage": "jest --ci --coverage",
     "test:unit:watch": "jest --watch",
     "test:unit:watchAll": "jest --watchAll",
     "serve:test:coverage": "quasar serve test/jest/coverage/lcov-report/ --port 8788",
@@ -20,7 +21,8 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "codecov": "^3.8.1"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
