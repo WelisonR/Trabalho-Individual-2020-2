@@ -18,3 +18,7 @@ RUN pip install -r requirements.txt
 
 # copy project files
 COPY . .
+
+# add and run as non-root user
+RUN adduser -D myuser
+USER myuser
