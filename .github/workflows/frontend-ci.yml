@@ -1,4 +1,4 @@
-name: Back-end CI
+name: Front-end CI
 
 on: push
 
@@ -25,7 +25,7 @@ jobs:
             frontend sh -c "quasar test --unit jest"
 
       - name: Publish code coverage
-      - uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v1
         with:
           directory: ./test/jest/coverage/
           files: ./coverage-final.json # optional
