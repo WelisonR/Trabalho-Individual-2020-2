@@ -14,3 +14,6 @@ jobs:
 
       - name: Build frontend image
         run: docker build -t frontend .
+
+      - name: Check eslint standards
+        run: docker run frontend yarn eslint --ext .js,.vue
