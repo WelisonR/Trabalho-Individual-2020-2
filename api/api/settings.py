@@ -28,9 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-print('ohayo');
-print(os.getenv('POSTGRES_HOST'))
-
 # Application definition
 
 INSTALLED_APPS = [
