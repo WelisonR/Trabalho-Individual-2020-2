@@ -4,3 +4,5 @@ djangorestframework==3.12.4
 psycopg2==2.8.6
 coverage==5.5
 flake8==3.9.1
+whitenoise==5.2.0
+dj-database-url==0.5.0

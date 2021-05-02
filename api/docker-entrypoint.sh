@@ -13,5 +13,7 @@ echo "PostgreSQL is ready!"
 python3 manage.py makemigrations 
 python3 manage.py migrate
 
+HOST_PORT="${PORT:-8000}"
+
 # initialize django server
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:$PORT
