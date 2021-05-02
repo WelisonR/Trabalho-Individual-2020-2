@@ -1,0 +1,16 @@
+name: Back-end CI
+
+on: push
+
+jobs:
+  frontend-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build frontend image
+        run: docker build -t frontend .
