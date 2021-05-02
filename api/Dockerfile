@@ -18,3 +18,5 @@ RUN pip install -r requirements.txt
 
 # copy project files
 COPY . .
+
+CMD ["sh", "-c", "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:$PORT"]
