@@ -30,7 +30,7 @@ DEBUG = int(os.environ.get('DEBUG', default=1))
 # Environment type (development or production)
 ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'glacial-harbor-86827.herokuapp.com/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'glacial-harbor-86827.herokuapp.com']
 
 # Application definition
 
