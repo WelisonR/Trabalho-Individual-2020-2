@@ -56,4 +56,4 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageLocations: ${{github.workspace}}/api/coverage.xml
+          coverageLocations: api/coverage.xml:coverage.py
