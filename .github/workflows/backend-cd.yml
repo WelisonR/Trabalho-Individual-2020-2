@@ -3,7 +3,7 @@ name: Back-end CD
 on:
   push:
     branches:
-      - backend-cd-config
+      - master
 
 jobs:
   build:
