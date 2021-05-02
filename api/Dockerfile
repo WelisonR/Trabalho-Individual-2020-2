@@ -18,3 +18,8 @@ RUN pip install -r requirements.txt
 
 # copy project files
 COPY . .
+
+# collect static files
+RUN python3 manage.py collectstatic --noinput
+
+CMD ["sh", "-c", "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:$PORT"]
