@@ -1,0 +1,62 @@
+name: Back-end CI
+
+on: push
+
+jobs:
+  backend-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+
+    services:
+      db:
+        image: postgres:12
+        env:
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: myproject
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build backend image
+        run: docker build -t backend .
+
+      - name: Check syntax errors with flake8 (blocking)
+        run: docker run backend flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Check code standards with flake8 (non-blocking)
+        run: docker run backend flake8 --exclude='.git,venv,*migrations*,static/lib' || true
+
+      - name: Build and test back-end
+        run: |
+          docker run\
+            --network="host"\
+            --env POSTGRES_HOST="localhost"\
+            --env POSTGRES_PORT="5432"\
+            --env POSTGRES_DB="myproject"\
+            --env POSTGRES_USER="myuser"\
+            --env POSTGRES_PASSWORD="password"\
+            --env DJANGO_KEY="django-insecure-sca_4i79@8^p7b4i3ggm!vz_&t7!+-omwh&8_q=lxbu%elp-o#"\
+            --volume ${PWD}:/api\
+            backend sh -c\
+              "python3 manage.py makemigrations\
+              && python3 manage.py migrate\
+              && coverage run manage.py test\
+              && coverage report\
+              && coverage xml"
+
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.1
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageLocations: api/coverage.xml:coverage.py

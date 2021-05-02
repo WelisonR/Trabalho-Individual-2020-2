@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,7 +83,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB', 'myproject'),
         'USER': os.getenv('POSTGRES_USER', 'myuser'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': os.getenv('POSGRES_PORT', '5432')
     }
 }
