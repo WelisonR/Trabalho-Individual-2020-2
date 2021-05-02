@@ -10,4 +10,4 @@ COPY . .
 RUN yarn global add @quasar/cli
 
 # install project dependencies
-RUN yarn install
+RUN yarn

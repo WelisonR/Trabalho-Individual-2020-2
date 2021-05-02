@@ -18,23 +18,16 @@ jobs:
       - name: Check eslint standards
         run: docker run frontend yarn eslint --ext .js,.vue
 
-      - name: Build and test front-end
+      - name: Test front-end
         run: |
           docker run\
             --volume ${PWD}:/client\
-            frontend yarn jest
-      
-      - name: Generate reports
-        run: |
-          docker run\
-            --volume ${PWD}:/client\
-            frontend yarn codecov
-      
-      - run: ls
+            frontend quasar test --unit jest
 
       - name: Publish code coverage
         uses: codecov/codecov-action@v1
         with:
+          files: ./client/coverage/coverage-final.json
           flags: unittests # optional
           fail_ci_if_error: true # optional (default = false)
           verbose: false # optional (default = false)
