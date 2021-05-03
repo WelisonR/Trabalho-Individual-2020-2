@@ -57,9 +57,11 @@ jobs:
               && coverage report\
               && coverage xml"
 
-      - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.1
+      - name: Report coverage
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x cc-test-reporter
+          ./cc-test-reporter format-coverage -t coverage.py coverage.xml
+          ./cc-test-reporter upload-coverage
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageLocations: api/coverage.xml:coverage.py
