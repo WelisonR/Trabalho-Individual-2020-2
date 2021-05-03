@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - frontend-cd-config
 
 jobs:
   build:
