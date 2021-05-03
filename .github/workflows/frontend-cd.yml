@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: ./client
 
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +29,7 @@ jobs:
       - name: Deploy front-end to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
-          publish-dir: ./client/dist
+          publish-dir: ${{github.workspace}}/client/dist
           production-branch: master
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: true
