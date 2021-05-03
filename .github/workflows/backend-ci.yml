@@ -57,9 +57,15 @@ jobs:
               && coverage report\
               && coverage xml"
 
+      # - name: Publish code coverage
+      #   uses: paambaati/codeclimate-action@v2.7.1
+      #   env:
+      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      #   with:
+      #     coverageLocations: api/coverage.xml:coverage.py
+
       - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.1
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        uses: coverallsapp/github-action@master
         with:
-          coverageLocations: api/coverage.xml:coverage.py
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: Unit
