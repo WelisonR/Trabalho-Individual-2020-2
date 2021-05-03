@@ -22,7 +22,7 @@ jobs:
       - name: Build production application
         run: |
           docker run\
-            --env NODE_ENV=production
+            --env NODE_ENV=production\
             --volume ${PWD}:/client\
             frontend bash -c "yarn && yarn build"
 
