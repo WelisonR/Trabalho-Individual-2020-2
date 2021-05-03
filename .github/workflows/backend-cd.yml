@@ -1,11 +1,10 @@
-name: Back-end CD
+name: Deploy back-end to netlify
 
 on:
   push:
     branches:
       - master
       - main
-      - backend-cd-config
 
 jobs:
   build:
