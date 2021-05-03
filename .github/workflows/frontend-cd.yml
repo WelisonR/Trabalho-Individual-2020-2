@@ -22,14 +22,14 @@ jobs:
       - name: Build production application
         run: |
           docker run\
-            --env NODE_ENV=production\
+            --env NODE_ENV="production"\
             --volume ${PWD}:/client\
             frontend bash -c "yarn && yarn build"
 
       - name: Deploy front-end to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
-          publish-dir: ${{github.workspace}}/client/dist/spa
+          publish-dir: ./client/dist/spa
           production-branch: master
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: true
