@@ -3,7 +3,7 @@ import axios from "axios";
 
 const url = "http://localhost:8000";
 if (process.env.NODE_ENV == "production") {
-  url = "http://glacial-harbor-86827.herokuapp.com";
+  url = "https://glacial-harbor-86827.herokuapp.com";
 }
 
 const api = axios.create({

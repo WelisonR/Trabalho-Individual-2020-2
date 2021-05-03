@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - main
-      - frontend-cd-config
 
 jobs:
   frontend-cd:
@@ -23,6 +22,7 @@ jobs:
       - name: Build production application
         run: |
           docker run\
+            --env NODE_ENV=production
             --volume ${PWD}:/client\
             frontend bash -c "yarn && yarn build"
 
@@ -38,4 +38,5 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NODE_ENV: production
         timeout-minutes: 2
