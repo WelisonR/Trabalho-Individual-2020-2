@@ -8,7 +8,7 @@ on:
       - frontend-cd-config
 
 jobs:
-  build:
+  frontend-cd:
     runs-on: ubuntu-18.04
     defaults:
       run:
@@ -24,7 +24,7 @@ jobs:
         run: |
           docker run\
             --volume ${PWD}:/client\
-            frontend bash -c "yarn build"
+            frontend bash -c "yarn && yarn build"
 
       - name: Deploy front-end to Netlify
         uses: nwtgck/actions-netlify@v1.2
