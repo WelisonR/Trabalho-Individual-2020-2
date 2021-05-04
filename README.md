@@ -1,89 +1,144 @@
-# Trabalho Individual 2020.2
+<div>
+  <h1 align="center">
+    GCES 2020.02 - Trabalho Individual
+  </h1>
+  <p align="center">
+      <a href="https://codeclimate.com/github/WelisonR/Trabalho-Individual-2020-2/maintainability"><img src="https://api.codeclimate.com/v1/badges/87274c02de2f5728ed7b/maintainability" /></a>
+      <a href="https://codeclimate.com/github/WelisonR/Trabalho-Individual-2020-2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/87274c02de2f5728ed7b/test_coverage" /></a>
+      <a href="https://codecov.io/gh/WelisonR/Trabalho-Individual-2020-2"><img src="https://codecov.io/gh/WelisonR/Trabalho-Individual-2020-2/branch/master/graph/badge.svg?token=A5JJKQIV5F"/></a>
+      <a href="https://github.com/WelisonR/Trabalho-Individual-2020-2" target="_blank" alt="Project Pull Requests"><img src="https://img.shields.io/github/issues-pr/WelisonR/Trabalho-Individual-2020-2?color=yellow&label=Pull%20Requests" />
+      <br/>
+      <a href="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/backend-ci.yml" target="_blank" alt="Back-end CI"><img src="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/backend-ci.yml/badge.svg" />
+      <a href="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/backend-cd.yml" target="_blank" alt="Back-end CD"><img src="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/backend-cd.yml/badge.svg" />
+      <a href="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/frontend-ci.yml" target="_blank" alt="Front-end CI"><img src="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/frontend-ci.yml/badge.svg" />
+      <a href="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/frontend-cd.yml" target="_blank" alt="Front-end CD"><img src="https://github.com/WelisonR/Trabalho-Individual-2020-2/actions/workflows/frontend-cd.yml/badge.svg" />
+  </p>
+</div>
 
+## <p align="left"><a href="https://agitated-goldwasser-21e397.netlify.app/">Utilize a aplicação em produção</a></p>
 
-A Gestão de Configuração de Software é parte fundamental no curso de GCES, e dominar os conhecimentos de configuração de ambiente, containerização, virtualização, integração e deploy contínuo tem se tornado cada vez mais necessário para ingressar no mercado de trabalho.
+## Rode a Aplicação com Docker-compose
 
-Para exercitar estes conhecimentos, você deverá aplicar os conceitos estudados ao longo da disciplina no produto de software contido neste repositório.
+### Dependências
 
-O sistema se trata de uma aplicação Web, cuja funcionalidade consiste numa lista de tarefas, que é composta de:
-- Front-end escrito em Javascript, utilizando os frameworks Vue.JS e Quasar;
-- Back-end escrito em Django REST;
-- Banco de Dados PostgreSQL;
+Inicialmente, instale localmente as seguintes dependências:
 
-Para executar a aplicação em sua máquina, basta seguir o passo-a-passo descrito no arquivos s README das pastas [api](./api/README.md) e [client](./client/README.md).
+1. Instale o [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/);
+2. Instale o [Docker Compose](https://docs.docker.com/compose/install/).
 
+### Arquivos de Configuração
 
-## Critérios de avaliação
+1. Crie um arquivo `.env` na raiz do projeto;
+2. Copie para o arquivo `.env` as configurações definidas no arquivo `.env-reference`.
 
-### 1. Containerização
+### Inicialização do Projeto
 
-A aplicação deverá ter seu ambiente completamente containerizado. Desta forma, cada subsistema (Front-end, Back-end e Banco de Dados) deverá ser isolado em um container individual.
+1. Na pasta principal do projeto, construa e inicialize a aplicação com o comando:
 
-Deverá ser utilizado um orquestrador para gerenciar comunicação entre os containers, o uso de credenciais, networks, volumes, entre outras configurações necessárias para a correta execução da aplicação.
+```bash
+sudo docker-compose up --build
+```
 
-Para realizar esta parte do trabalho, recomenda-se a utilização das ferramentas:
+2. Após inicializada a aplicação, os recursos do sistema estarão disponíveis nos links abaixo:
 
-- Docker versão 17.04.0+
-- Docker Compose com sintaxe na versão 3.2+
+- Front-end: `http://localhost:8080/`;
+- Back-end: `http://localhost:8000/task` (com postgres rodando na porta 5432).
 
-### 2. Integração contínua
+**Observação**: se necessário remover o que foi criado com o _docker-compose_, utilize o comando `sudo docker-compose down -v` na raiz do projeto.
 
-Você deverá criar um 'Fork' deste repositório, onde será desenvolvida sua solução. Nele, cada commit submetido deverá passar por um sistema de integração contínua, realizando os seguintes estágios:
+## Containerização
 
-- Build: Construção completa do ambiente;
-- Testes: Os testes automatizados da aplicação devem ser executados;
-- Análise Estática de código: Deverá ser realizada a integração com algum serviço externo de análise estática de código fonte (Ex: Code Climate), análise de folhas de estilo (Stylesheet / Linter);
-- Análise de cobertura de testes: Devera será ser incluida também uma ferramenta para apontar a métrica de cobertura de testes.
+Realizou-se o provisonamento do ambiente com base em três serviços, orquetrados e definidos pelo arquivo [docker-compose](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/docker-compose.yml):
 
-O sistema de integração contínua deve exibir as informações de cada pipeline, e impedir que trechos de código que não passem corretamente por todo o processo sejam adicionados à 'branch default' do repositório.
+- Banco de dados: serviço do banco de dados postgreSQL, com mapeamento de volume da base de dados, definidos no arquivo [docker-compose](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/docker-compose.yml);
+- Back-end: serviço que utiliza o _framework_ _django_ e funciona como `api` da aplicação. Definiu-se um arquivo [Dockerfile](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/api/Dockerfile) de configuração de ambiente, além de um [ponto de entrada do back-end](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/api/docker-entrypoint.sh);
+- Front-end: serviço que utiliza o _framework_ _quasar_ e funciona como interface da aplicação. Definiu-se um arquivo [Dockerfile](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/client/Dockerfile) de configuração de ambiente.
 
-Para esta parte do trabalho, poderá ser utilizada qualquer tecnologia ou ferramenta que o aluno desejar, como GitlabCI, Actions, TravisCI, CircleCI, Jenkins, CodeClimate, entre outras.
+![Containerização](assets/docker-environment.png)
 
-### 3. Deploy contínuo
+## Integração Contínua
 
-Também deve ser feita a configuração de um pipeline de modo a publicar a aplicação automaticamente, sempre que um novo trecho de código seja integrado à branch default.
+Utiliza-se diversos serviços para realizar a integração contínua do projeto. Nesse sentido, pode-se destacar os serviços abaixo.
 
-Assim como na Integração Contínua, poderá ser utilizado qualquer servidor de cloud que o aluno desejar, como DigitalOcean, Heroku, AWS, entre outros.
+### GitHub Actions
 
-### 4. Kubernets (extra)
+**Acesse as definições dos GitHub Actions no link**: [GitHub Actions](https://github.com/WelisonR/Trabalho-Individual-2020-2/tree/master/.github/workflows).
 
-Caso cumpra todos os requisitos descritos acima, será atribuída uma pontuação extra para o aluno que configure o deploy com Kubernets.
+Utilizou-se o GitHub Actions para executar todas as etapas de integração contínua do projeto. Foram definidas duas ações de integração contínua:
 
-## Nota
+- [Integração contínua do Front-end](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/.github/workflows/frontend-ci.yml):
+  - Constrói a imagem do ambiente;
+  - Verifica a folha de estilo com a ferramenta `eslint` com base nas definições dos [arquivos de definição do eslint](https://github.com/WelisonR/Trabalho-Individual-2020-2/tree/master/client);
+  - Roda os testes e gera relatórios com a ferramenta `jest`;
+  - Publica os relatórios de teste para o serviço `codecov`.
+- [Integração contínua do Back-end](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/.github/workflows/backend-ci.yml):
+  - Constrói a imagem do ambiente;
+  - Verifica a folha de estilo com a ferramenta `flake8` com base nas definições do arquivo [setup.cfg](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/api/setup.cfg);
+  - Roda e gera relatórios dos testes com a ferramenta `coverage`;
+  - Publica os relatórios de teste para o serviço `code climate`.
 
-A nota de cada aluno será a soma dos itens abaixo que serão avaliados tanto de forma quantitativa (se foi realizado a implementação + documentação), quanto qualitativamente (como foi implementado, entendimento dos conceitos na prática, complexidade da solução). Faça os commits atômicos, bem documentados, completos a fim de facilitar o entendimento e avaliação do seu trabalho. Lembrando que esse trabalho é individual. 
+Caso alguma etapa não tenha sido bem-sucedida, o pipeline é finalizado com erro.
 
-Os Itens de avaliação são (cada item tem peso 1 na nota final de 0 - 10):
+[![GitHub Actions](assets/github-actions.png)](https://github.com/WelisonR/Trabalho-Individual-2020-2/actions)
 
-**1. Containerização**
+### Code Climate
 
-- Container do Back-end
-- Container do Front-end
-- Container do Banco de Dados
-- Automação entre os containers (Docker-compose)
+O serviço Code Climate foi configurado com a finalidade de realizar análise de qualidade de código de toda a aplicação, além de gerar análises com base nos resultados de testes do back-end.
 
-**2. Integração contínua (Front-end)**
+- **Acesse os relatórios do Code Climate no link**: [Análise Code Climate](https://codeclimate.com/github/WelisonR/Trabalho-Individual-2020-2).
 
-- Build: Construção completa do ambiente
-- Testes: Os testes automatizados da aplicação devem ser executados
-- Coleta de métricas: Deverá ser realizada a integração com algum serviço externo de coleta de métricas de qualidade;
+![Code Climate](assets/code-climate.png)
 
-Regras de avaliação: O sistema de integração contínua deve exibir as informações de cada pipeline, e impedir que trechos de código que não passem corretamente por todo o processo sejam adicionados à 'branch default' do repositório.
+### Codecov
 
-**3. Integração contínua (Back-end)**
+O serviço Codecov foi configurado para gerar análises com base nos resultados de testes do front-end.
 
-- Build: Construção completa do ambiente
-- Testes: Os testes automatizados da aplicação devem ser executados
-- Coleta de métricas: Deverá ser realizada a integração com algum serviço externo de coleta de métricas de qualidade;
+- **Acesse os relatórios de teste do Codecov no link**: [Análise Codecov](https://app.codecov.io/gh/WelisonR/Trabalho-Individual-2020-2/).
 
-Regras de avaliação: O sistema de integração contínua deve exibir as informações de cada pipeline, e impedir que trechos de código que não passem corretamente por todo o processo sejam adicionados à 'branch default' do repositório.
+![CodeCov](assets/codecov.png)
 
-**4. Coverage (Extra)**
+### Restrições de _Branchs_ e _Pull Requests_
 
-Caso cumpra todos os requisitos obrigatórios descritos acima, será atribuída uma pontuação extra para o aluno que configure sua pipeline de modo a coletar a porcentagem de cobertura de testes na aplicação (Back end e Front end).
+Antes de integrar mudanças a _branch_ padrão, _master_, devem ser observados os seguintes pontos:
 
-**5. Deploy contínuo (Extra)**
+1. _Pull request_ deve ter ao menos uma revisão;
+2. As etapas de integração contínua devem rodar adequadamente, com as seguintes observações:
+   1. A etapa de integração contínua do back-end do GitHub Actions deve finalizar com sucesso;
+   2. A etapa de integração contínua do front-end do GitHub Actions deve finalizar com sucesso;
+   3. Cobertura de testes do back-end deve estar superior a 90% (code climate);
+   4. Cobertura de testes do front-end não pode ter uma queda na porcentagem de cobertura (codecov);
+   5. Validação de qualidade de código do code climate apresenta resultados positivos.
 
-Caso cumpra todos os requisitos obrigatórios descritos acima, será atribuída uma pontuação extra para o aluno que configure sua pipeline de modo a publicar a aplicação automaticamente, sempre que um novo trecho de código seja integrado à branch default.
+Além disso, são gerados comentários automáticos do codecov e do code climate nos _pull requests_ em relação a qualidade de código e testes da aplicação.
 
+![Pull Requests](assets/pull-requests.png)
 
+### Deploy Contínuo
+
+Para realizar o deploy contínuo da aplicação, utilizou-se ações do GitHub Actions.
+
+### Front-end
+
+Realizou-se o deploy contínuo do front-end com o uso do serviço [Netlify](https://www.netlify.com/).
+
+**Link para acessar o ambiente de produção do front-end**: [front-end em produção](https://agitated-goldwasser-21e397.netlify.app/).
+
+Ações do GitHub Actions:
+
+- [Deploy contínuo do front-end](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/.github/workflows/frontend-cd.yml): disparado no momento em que uma nova mudança é integrada à _branch_ master. É realizada a construção e a entrega da aplicação no serviço Netlify.
+
+### Back-end
+
+Realizou-se o deploy contínuo do back-end com o uso do serviço [Heroku](heroku.com). O heroku realiza o provisionameto da infraestrutura tanto do back-end (django) como do banco de dados (postgreSQL).
+
+**Link para acessar o ambiente de produção do back-end**: [back-end produção](https://glacial-harbor-86827.herokuapp.com/task/).
+
+Ações do GitHub Actions:
+
+- [Deploy contínuo do back-end](https://github.com/WelisonR/Trabalho-Individual-2020-2/blob/master/.github/workflows/backend-cd.yml): disparado no momento em que uma nova mudança é integrada à _branch_ master. É realizada entrega da aplicação no serviço Heroku.
+
+## Autor
+
+| Matrícula  | Estudante                   |
+| ---------- | --------------------------- |
+| 17/0024121 | Welison Lucas Almeida Regis |
