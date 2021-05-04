@@ -1,4 +1,4 @@
-name: Deploy front-end to netlify
+name: Front-end CD
 
 on:
   push:
@@ -16,16 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build frontend image
+      - name: Build front-end image
         run: docker build -t frontend .
 
-      - name: Build production application
+      - name: Build production app
         run: |
           docker run\
             --volume ${PWD}:/client\
             frontend bash -c "yarn && yarn build"
 
-      - name: Deploy front-end to Netlify
+      - name: 🚀 Deploy front-end app to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: ./client/dist/spa
