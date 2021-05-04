@@ -92,10 +92,6 @@ DATABASES = {
     }
 }
 
-print('--------------------------')
-print(os.getenv('ENVIRONMENT'))
-print('--------------------------')
-
 if ENVIRONMENT == 'production':
     DATABASE_URL = os.environ.get('DATABASE_URL')
     db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)

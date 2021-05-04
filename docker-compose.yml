@@ -34,8 +34,6 @@ services:
     command: /bin/sh -c "quasar dev"
     depends_on:
       - backend
-    env_file:
-      ./.env
 
 volumes:
   postgres_data_app:

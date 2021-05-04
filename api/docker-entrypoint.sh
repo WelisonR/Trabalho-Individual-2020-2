@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Waiting PosgreSQL..."
+echo "Waiting PostgreSQL..."
 
 # use netcat to check database availability
 while ! nc -z db 5432; do
