@@ -1,5 +1,7 @@
 from django.test import TestCase
 from task.models import Task
+
+
 class TestModels(TestCase):
     def test_task_creation(self):
         task_title = "Task title"
