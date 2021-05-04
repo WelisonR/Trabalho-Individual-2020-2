@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-from pathlib import Path
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -92,10 +91,6 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT', '5432')
     }
 }
-
-print('--------------------------')
-print(os.getenv('ENVIRONMENT'))
-print('--------------------------')
 
 if ENVIRONMENT == 'production':
     DATABASE_URL = os.environ.get('DATABASE_URL')

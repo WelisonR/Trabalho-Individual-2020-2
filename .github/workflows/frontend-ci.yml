@@ -15,22 +15,19 @@ jobs:
       - name: Build frontend image
         run: docker build -t frontend .
 
-      - name: Check eslint standards
+      - name: Check stylesheet with eslint
         run: docker run frontend yarn eslint --ext .js,.vue
 
-      - name: Display folders
-        run: ls
-
-      - name: Test front-end
+      - name: Run back-end tests
         run: |
           docker run\
             --volume ${PWD}:/client\
             frontend bash -c "yarn && yarn test:ci:unit:coverage"
 
-      - name: Publish code coverage
+      - name: Publish tests to Codecov
         uses: codecov/codecov-action@v1
         with:
           files: ./client/coverage/coverage-final.json
-          flags: unittests # optional
-          fail_ci_if_error: true # optional (default = false)
-          verbose: false # optional (default = false)
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: false
